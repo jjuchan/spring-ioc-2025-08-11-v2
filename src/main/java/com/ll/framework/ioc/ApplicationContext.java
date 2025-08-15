@@ -36,7 +36,7 @@ public class ApplicationContext {
         // 파라미터 없는 생성자가 있으면 사용, 없으면 파라미터가 가장 적은 생성자 사용
         Constructor<?> constructor = Arrays.stream(constructors).min(Comparator.comparingInt(Constructor::getParameterCount)).orElseThrow();
 
-        constructor.setAccessible(true);
+        constructor.setAccessible(true); //reflection 에서 private 생성자에도 접근 할 수 있게 해줌
 
         Class<?>[] paramTypes = constructor.getParameterTypes();
         Object[] params = new Object[paramTypes.length];
