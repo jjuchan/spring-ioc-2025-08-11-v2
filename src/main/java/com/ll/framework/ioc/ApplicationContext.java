@@ -20,12 +20,9 @@ public class ApplicationContext {
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(Component.class);
 
         for (Class<?> clazz : classes) {
-            if (clazz.isAnnotation()) continue;
-
             try {
-                Object instance = createBean(clazz);
                 String beanName = Ut.str.lcfirst(clazz.getSimpleName());
-                singletons.put(beanName, instance);
+                beans.put(beanName, clazz);
 
             } catch (Exception e) {
                 throw new RuntimeException("빈 생성 실패: " + clazz, e);
