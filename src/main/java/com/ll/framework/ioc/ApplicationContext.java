@@ -31,10 +31,12 @@ public class ApplicationContext {
     }
 
     private Object createBean(Class<?> clazz) throws Exception {
-        Constructor<?>[] constructors = clazz.getConstructors();
+        Constructor<?>[] constructors = clazz.getDeclaredConstructors();
 
         // 파라미터 없는 생성자가 있으면 사용, 없으면 파라미터가 가장 적은 생성자 사용
         Constructor<?> constructor = Arrays.stream(constructors).min(Comparator.comparingInt(Constructor::getParameterCount)).orElseThrow();
+
+        constructor.setAccessible(true);
 
         Class<?>[] paramTypes = constructor.getParameterTypes();
         Object[] params = new Object[paramTypes.length];
